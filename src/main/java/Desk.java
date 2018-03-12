@@ -4,25 +4,30 @@ import java.util.*;
 
 public class Desk {
 
-    final int NUMBER_OF_CARDS = 52;
-    final int NUMBER_OF_FIGURES = 13;
-    final int NUMBER_OF_ONE_KIND_CARDS = 4;
-    public List<Card> desk;
+    private final int NUMBER_OF_CARDS = 52;
+    private final int NUMBER_OF_FIGURES = 13;
+    private List<Card> desk;
 
-    public Desk() {
+    Desk() {
         int cardNumber = 2;
         for(; cardNumber <=  NUMBER_OF_FIGURES + 1 ; cardNumber++){
-
+            List<Card> oneFigureCards = Arrays.asList(createOneFigureCards(cardNumber));
+            desk.addAll(oneFigureCards);
         }
         if(desk.size() != NUMBER_OF_CARDS){
             throw new IllegalArgumentException("Bad number of cards");
         }
     }
 
-
-    Card [] createOneFigureCards(int cardNumber){
+    private Card [] createOneFigureCards(int cardNumber){
         return new Card[]{new Card(cardNumber, "Hearts"), new Card(cardNumber, "Diamonds"), new Card(cardNumber, "Clubes"), new Card(cardNumber, "Spades")};
     }
 
+    public List<Card> getDesk() {
+        return desk;
+    }
 
+    public void setDesk(List<Card> desk) {
+        this.desk = desk;
+    }
 }
