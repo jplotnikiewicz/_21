@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contestant implements Player{
@@ -6,13 +7,19 @@ public class Contestant implements Player{
     private List<Card> cards;
     private int points;
 
+    Contestant(){
+        money = 100;
+        cards = new ArrayList<Card>();
+        points = 0;
+    }
+
 
     public int getMoney() {
         return money;
     }
 
     public void setMoney(int money) {
-        this.money = money;
+        this.money += money;
     }
 
     public List<Card> getCards(){

@@ -1,9 +1,15 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class Bank implements Player {
+public class Bank extends Croupier implements Player {
 
     private List<Card> cards;
     private int points;
+
+    Bank(){
+        cards = new ArrayList<Card>();
+        points = 0;
+    }
 
     public List<Card> getCards(){
         return cards ;
