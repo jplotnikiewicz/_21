@@ -9,6 +9,7 @@ public class Desk {
     private List<Card> desk;
 
     Desk() {
+        desk = new ArrayList<Card>();
         int cardNumber = 2;
         for(; cardNumber <=  NUMBER_OF_FIGURES + 1 ; cardNumber++){
             List<Card> oneFigureCards = Arrays.asList(createOneFigureCards(cardNumber));

@@ -8,7 +8,7 @@ public class Card {
     private String name ;
     private String color ;
 
-    Card(int cardNumber, String color){
+    Card(int cardNumber, String color) throws  IllegalArgumentException{
 
         if(cardNumber <2  || cardNumber > 14){
             throw new IllegalArgumentException("bad card");

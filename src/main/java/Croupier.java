@@ -46,6 +46,6 @@ public class Croupier {
         deskOfCards.addAll(dealtCards);
         desk.setDesk(deskOfCards);
         shuffling(desk);
-        dealtCards = new ArrayList<Card>();
+        dealtCards.clear();
     }
 }
