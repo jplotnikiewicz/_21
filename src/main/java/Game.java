@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Game {
 
-    private static boolean isBetingEnded = false;
+    private static boolean isFirstGamePhaseEnded = false;
     private static boolean isPlayerRoundEnded = false;
     private static boolean isComputerroundEnded = false;
 
@@ -14,25 +14,28 @@ public class Game {
         Bank croupier = table.getCroupier();
         Scanner scanner = new Scanner(System.in);
 
-        while (!isBetingEnded) {
+        while (!isFirstGamePhaseEnded) {
             System.out.println("You got: " + humanPlayer.getMoney() + " $");
             System.out.println("How much do you want to bet ? ");
             bet = scanner.nextInt();
             bet(humanPlayer);
-            if(bet != 0){
-                isBetingEnded = true;
+            if(bet == 0){
+                continue;
             }
             System.out.println("You got: " + humanPlayer.getMoney() + " $");
-        }
-        while (!isPlayerRoundEnded){
-             firstDistribution(croupier, humanPlayer);
+            System.out.println("You bet: " + bet + " $");
+            firstDistribution(croupier, humanPlayer);
+
+            List<Card> playerCards = humanPlayer.getCards();
+            System.out.print("Player Cards: ");
+            cardsDisplaing(playerCards);
+            System.out.print("Croupier Cards: ");
+            List<Card> croupierCards = croupier.getCards();
+            cardsDisplaing(croupierCards);
+
             System.out.println("Player got: " + pointsDisplayer(humanPlayer) + " points");
             System.out.println("Croupier got: " + pointsDisplayer(croupier) + " points");
-
         }
-
-
-
     }
 
     private static void bet(Contestant contestant){
@@ -49,6 +52,14 @@ public class Game {
         croupier.setCards(croupier.giveCard());
         player.setCards(croupier.giveCard());
         croupier.setCards(croupier.giveCard());
+    }
+
+    private static void cardsDisplaing (List<Card> cards){
+
+        for(int i = 0; i<cards.size()-1 ;i++) {
+            System.out.print(cards.get(i) + " ,");
+        }
+        System.out.println(cards.get(cards.size()-1));
     }
 
     private static int pointsDisplayer(Player player){

@@ -20,7 +20,7 @@ public class Card {
         }else {
             this.value = 11;
         }
-        this.name = cardsNames.get(cardNumber-1);
+        this.name = cardsNames.get(cardNumber-2);
         this.color = color;
     }
 
@@ -46,5 +46,10 @@ public class Card {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return this.name+' ' + this.color;
     }
 }
