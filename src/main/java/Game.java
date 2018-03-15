@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Game {
+public class Game extends  PointsCalculator {
 
     private static boolean isFirstGamePhaseEnded = false;
     private static boolean isPlayerRoundEnded = false;
@@ -10,6 +10,7 @@ public class Game {
 
     public static void main(String args[]){
         Table table = new Table();
+        String result;
         Contestant humanPlayer = table.getHumanPlayer();
         Bank croupier = table.getCroupier();
         Scanner scanner = new Scanner(System.in);
@@ -30,11 +31,15 @@ public class Game {
             System.out.print("Player Cards: ");
             cardsDisplaing(playerCards);
             System.out.print("Croupier Cards: ");
-            List<Card> croupierCards = croupier.getCards();
-            cardsDisplaing(croupierCards);
 
-            System.out.println("Player got: " + pointsDisplayer(humanPlayer) + " points");
-            System.out.println("Croupier got: " + pointsDisplayer(croupier) + " points");
+            List<Card> croupierCards = new ArrayList<Card>(croupier.getCards()) ;
+            if(croupierCards.get(1).getValue()<=10) {
+                croupierCards.remove(1);
+            }
+            cardsDisplaing(croupierCards);
+            result = PointsCalculator.gameResult(humanPlayer, croupier);
+            System.out.println("Player got: " + humanPlayer.getPoints() + " points");
+            System.out.println("Croupier got: " + croupier.getPoints() + " points");
         }
     }
 
@@ -60,17 +65,6 @@ public class Game {
             System.out.print(cards.get(i) + " ,");
         }
         System.out.println(cards.get(cards.size()-1));
-    }
-
-    private static int pointsDisplayer(Player player){
-        if(player instanceof Contestant || isPlayerRoundEnded){
-            return player.getPoints();
-        }
-        List <Card> bankCards = player.getCards();
-        Card secoundHiddenCard = bankCards.get(1);
-        int valuOfSecoundHiddenCard = secoundHiddenCard.getValue();
-
-        return player.getPoints() - valuOfSecoundHiddenCard;
     }
 
     private static void cardForUser(Bank croupier, Contestant player) {

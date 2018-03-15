@@ -14,6 +14,7 @@ public class Bank extends Croupier implements Player {
     public List<Card> getCards(){
         return cards ;
     }
+
     public void setCards(Card card){
         cards.add(card);
     }
