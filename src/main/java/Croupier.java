@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Croupier {//
+public class Croupier {
    private final int NUMBER_OF_CARDS = 52;
 
     private Desk desk;

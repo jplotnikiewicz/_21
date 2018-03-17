@@ -11,7 +11,7 @@ public final class Table {
     public Bank getCroupier() {
         return croupier;
     }
-//
+
     public Contestant getHumanPlayer() {
         return humanPlayer;
     }

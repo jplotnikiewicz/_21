@@ -1,5 +1,5 @@
 import java.util.*;
-//
+
 public class Card {
 
     private static List<String> cardsNames = new ArrayList<String>(Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "10", "J" ,"Q", "K", "A"));

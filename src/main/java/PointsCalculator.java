@@ -37,7 +37,7 @@ public class PointsCalculator {
         }
         return "Bank";
     }
-//
+
     private static int sumCardsPoints(List<Card> playerCards){
         int points = 0;
         for(Card card : playerCards){
