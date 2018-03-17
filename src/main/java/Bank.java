@@ -7,7 +7,7 @@ public class Bank extends Croupier implements Player {
     private int points;
 
     Bank(){
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<Card>();//
         points = 0;
     }
 

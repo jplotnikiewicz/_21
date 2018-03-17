@@ -31,7 +31,7 @@ public class Game extends  PointsCalculator {
             System.out.print("Player Cards: ");
             cardsDisplaing(playerCards);
             System.out.print("Croupier Cards: ");
-
+//
             List<Card> croupierCards = new ArrayList<Card>(croupier.getCards()) ;
             if(croupierCards.get(1).getValue()<=10) {
                 croupierCards.remove(1);

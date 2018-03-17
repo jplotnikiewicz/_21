@@ -6,7 +6,7 @@ public class Contestant implements Player{
     private int money;
     private List<Card> cards;
     private int points;
-
+//
     Contestant(){
         money = 100;
         cards = new ArrayList<Card>();
