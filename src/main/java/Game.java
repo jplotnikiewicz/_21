@@ -7,59 +7,66 @@ public class Game extends  PointsCalculator {
     private static boolean isComputerroundEnded = false;
 
     private static int bet;
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String args[]){
         Table table = new Table();
         String result;
         Contestant humanPlayer = table.getHumanPlayer();
         Bank croupier = table.getCroupier();
-        Scanner scanner = new Scanner(System.in);
+        boolean isEndGame;
 
         while (!isFirstGamePhaseEnded) {
-            System.out.println("You got: " + humanPlayer.getMoney() + " $");
-            System.out.println("How much do you want to bet ? ");
-            bet = scanner.nextInt();
             bet(humanPlayer);
             if(bet == 0){
                 continue;
             }
-            System.out.println("You got: " + humanPlayer.getMoney() + " $");
-            System.out.println("You bet: " + bet + " $");
             firstDistribution(croupier, humanPlayer);
-
-            List<Card> playerCards = humanPlayer.getCards();
-            System.out.print("Player Cards: ");
-            cardsDisplaing(playerCards);
-            System.out.print("Croupier Cards: ");
-
-            List<Card> croupierCards = new ArrayList<Card>(croupier.getCards()) ;
-            if(croupierCards.get(1).getValue()<=10) {
-                croupierCards.remove(1);
-            }
-            cardsDisplaing(croupierCards);
+            cardsDisplaing(croupier, humanPlayer);
             result = PointsCalculator.gameResult(humanPlayer, croupier);
-            System.out.println("Player got: " + humanPlayer.getPoints() + " points");
-            System.out.println("Croupier got: " + croupier.getPoints() + " points");
+            pointDisplaing(croupier, humanPlayer);
+
+            isEndGame = result.equals("Bank") || result.equals("Contestant");
+            if(isEndGame){
+
+            }
         }
     }
 
-    private static void bet(Contestant contestant){
-        if(bet>contestant.getMoney()){
+    private static void bet(Contestant humanPlayer){
+        System.out.println("You got: " + humanPlayer.getMoney() + " $");
+        System.out.println("How much do you want to bet ? ");
+        bet = scanner.nextInt();
+        if(bet>humanPlayer.getMoney()){
             System.out.println("To small amount of moneys");
             bet = 0 ;
             return;
         }
-        contestant.setMoney(- bet);
+        humanPlayer.setMoney(- bet);
     }
 
-    private static void firstDistribution(Bank croupier, Contestant player){
-        player.setCards(croupier.giveCard());
+    private static void firstDistribution(Bank croupier, Contestant humanPlayer){
+        System.out.println("You got: " + humanPlayer.getMoney() + " $");
+        System.out.println("You bet: " + bet + " $");
+        humanPlayer.setCards(croupier.giveCard());
         croupier.setCards(croupier.giveCard());
-        player.setCards(croupier.giveCard());
+        humanPlayer.setCards(croupier.giveCard());
         croupier.setCards(croupier.giveCard());
     }
 
-    private static void cardsDisplaing (List<Card> cards){
+    private static void cardsDisplaing (Bank croupier, Contestant humanPlayer){
+        List<Card> playerCards = humanPlayer.getCards();
+        System.out.print("Player Cards: ");
+        dispay(playerCards);
+        System.out.print("Croupier Cards: ");
+        List<Card> croupierCards = new ArrayList<Card>(croupier.getCards()) ;
+        if(croupierCards.get(1).getValue()<=10) {
+            croupierCards.remove(1);
+        }
+        dispay(croupierCards);
+    }
+
+    private static void dispay (List<Card> cards){
 
         for(int i = 0; i<cards.size()-1 ;i++) {
             System.out.print(cards.get(i) + " ,");
@@ -67,9 +74,14 @@ public class Game extends  PointsCalculator {
         System.out.println(cards.get(cards.size()-1));
     }
 
-    private static void cardForUser(Bank croupier, Contestant player) {
+    private static void pointDisplaing (Bank croupier, Contestant humanPlayer){
+        System.out.println("Player got: " + humanPlayer.getPoints() + " points");
+        System.out.println("Croupier got: " + croupier.getPoints() + " points");
+    }
+
+    private static void cardForUser(Bank croupier, Contestant humanPlayer) {
         if (!isPlayerRoundEnded) {
-            player.setCards(croupier.giveCard());
+            humanPlayer.setCards(croupier.giveCard());
         }
     }
 
@@ -80,11 +92,11 @@ public class Game extends  PointsCalculator {
         }
     }
 
-    private static void afterGame(String result, Contestant contestant){
+    private static void afterGame(String result, Contestant humanPlayer){
         if(result.equals("Contestant")) {
-            contestant.setMoney(2 * bet);
+            humanPlayer.setMoney(2 * bet);
         }else if(result.equals("Draw")){
-            contestant.setMoney(bet);
+            humanPlayer.setMoney(bet);
         }
         bet = 0;
         isPlayerRoundEnded = false;
