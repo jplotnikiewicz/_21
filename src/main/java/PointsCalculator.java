@@ -2,13 +2,10 @@ import java.util.List;
 
 public class PointsCalculator {
 
-    static boolean isEndOfHumanPlayerTurn = false;
-    static boolean isEndOfComputerPlayerTurn = false;
-
     public static String gameResult(Contestant humanPlayer, Bank computerPlayer){
         pointsCalculator(humanPlayer);
         pointsCalculator(computerPlayer);
-        if (isEndOfComputerPlayerTurn) {
+        if (Game.isComputerroundEnded) {
             return winnerDetermination(humanPlayer, computerPlayer);
         }
         return "Game is stil going on";
@@ -16,7 +13,7 @@ public class PointsCalculator {
 
     private static void pointsCalculator(Player player){
         List<Card> playerCards = player.getCards();
-        boolean isCrupierPointsShowed = isEndOfHumanPlayerTurn && player instanceof Bank;
+        boolean isCrupierPointsShowed = player instanceof Bank && (playerCards.get(0).getValue() > 9 || Game.isPlayerRoundEnded);
         boolean isHumanPlayer = player instanceof Contestant;
         int points;
         if(isCrupierPointsShowed || isHumanPlayer) {
@@ -50,17 +47,17 @@ public class PointsCalculator {
         return points;
     }
 
-    public static boolean isMoreThan21(int points){
+    private static boolean isMoreThan21(int points){
         return points > 21;
     }
 
-    public static boolean isBlackJack(Player player){
+    private static boolean isBlackJack(Player player){
         return player.getPoints() == 21;
     }
-    public static boolean draw(Contestant humanPlayer, Bank computerPlayer) {
+    private static boolean draw(Contestant humanPlayer, Bank computerPlayer) {
         return humanPlayer.getPoints() == computerPlayer.getPoints();
     }
-    public static boolean humanWin(Contestant humanPlayer, Bank computerPlayer){
+    private static boolean humanWin(Contestant humanPlayer, Bank computerPlayer){
         return humanPlayer.getPoints()> computerPlayer.getPoints();
     }
 
