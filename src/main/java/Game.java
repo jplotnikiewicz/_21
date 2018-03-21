@@ -4,7 +4,7 @@ public class Game extends  PointsCalculator {
 
     private static boolean isFirstGamePhaseEnded = false;
     public static boolean isPlayerRoundEnded = false;
-    public static boolean isComputerroundEnded = false;
+    public static boolean isComputerRoundEnded = false;
 
     private static int bet;
     private static Scanner scanner = new Scanner(System.in);
@@ -27,28 +27,33 @@ public class Game extends  PointsCalculator {
             pointDisplaing(croupier, humanPlayer);
             isEndGame = endGameResult(result, humanPlayer);
             isFirstGamePhaseEnded = true;
+            System.out.println("result = "+ result);
         }
         while (!isPlayerRoundEnded ){
-//            System.out.println("Do you want Card ? Yes/No ");
-            String doYouWantCard = scanner.nextLine();
-            if(doYouWantCard.equals("Yes")){
+            System.out.println("Do you want a card ? ");
+            System.out.println("Say Yes or No");
+            String doYouWantCard = scanner.next();
+            doYouWantCard = doYouWantCard.toLowerCase();
+            if(doYouWantCard.toLowerCase().equals("no") || isEndGame ) {
+                isPlayerRoundEnded = true;
+            }else if(doYouWantCard.toLowerCase().equals("yes")){
                 cardForUser(croupier, humanPlayer);
                 result = PointsCalculator.gameResult(humanPlayer, croupier);
                 cardsDisplaing(croupier, humanPlayer);
                 pointDisplaing(croupier, humanPlayer);
                 isEndGame = endGameResult(result, humanPlayer);
-            }else if(doYouWantCard.equals("No") || isEndGame ){
-                isPlayerRoundEnded = true;
+                System.out.println("result = "+ result);
             }else{
                 System.out.println("Say Yes or No");
-                continue;
             }
         }
+       while (!isComputerRoundEnded){
+           isComputerRoundEnded = true;
+           result = PointsCalculator.gameResult(humanPlayer, croupier);
+           isEndGame = endGameResult(result, humanPlayer);
+           System.out.println("result = "+ result);
 
-//        while (!isComputerroundEnded){
-//
-//
-//        }
+      }
     }
 
     private static void bet(Contestant humanPlayer){
@@ -103,7 +108,7 @@ public class Game extends  PointsCalculator {
             resultDispaling(result);
             afterGame(result, humanPlayer);
             isPlayerRoundEnded = true;
-            isComputerroundEnded = true;
+            isComputerRoundEnded = true;
         }
         return isEndGame;
     }
@@ -120,7 +125,7 @@ public class Game extends  PointsCalculator {
         }
         bet = 0;
         isPlayerRoundEnded = false;
-        isComputerroundEnded = false;
+        isComputerRoundEnded = false;
     }
 
     private static void cardForUser(Bank croupier, Contestant humanPlayer) {
@@ -131,7 +136,8 @@ public class Game extends  PointsCalculator {
 
     private static void cardsForCroupier(Bank croupier, int playerPoints){
         boolean isComputerGotMorePoints = croupier.getPoints() > playerPoints ;
-        if(!isComputerroundEnded && !isComputerGotMorePoints){
+        boolean isComputerGot20Points = croupier.getPoints() == 20 ;
+        if(!isComputerRoundEnded && !isComputerGotMorePoints && isComputerGot20Points){
             croupier.setCards(croupier.giveCard());
         }
     }
