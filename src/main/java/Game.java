@@ -42,18 +42,17 @@ public class Game extends  PointsCalculator {
                 cardsDisplaing(croupier, humanPlayer);
                 pointDisplaing(croupier, humanPlayer);
                 isEndGame = endGameResult(result, humanPlayer);
-                System.out.println("result = "+ result);
             }else{
-                System.out.println("Say Yes or No");
+                System.out.println("Wrong answer");
             }
         }
-       while (!isComputerRoundEnded){
-           isComputerRoundEnded = true;
-           result = PointsCalculator.gameResult(humanPlayer, croupier);
-           isEndGame = endGameResult(result, humanPlayer);
-           System.out.println("result = "+ result);
-
-      }
+        while (!isComputerRoundEnded) {
+            cardsForCroupier(croupier, humanPlayer.getPoints());
+            result = PointsCalculator.gameResult(humanPlayer, croupier);
+            cardsDisplaing(croupier, humanPlayer);
+            pointDisplaing(croupier, humanPlayer);
+            endGameResult(result, humanPlayer);
+        }
     }
 
     private static void bet(Contestant humanPlayer){
@@ -135,10 +134,14 @@ public class Game extends  PointsCalculator {
     }
 
     private static void cardsForCroupier(Bank croupier, int playerPoints){
-        boolean isComputerGotMorePoints = croupier.getPoints() > playerPoints ;
-        boolean isComputerGot20Points = croupier.getPoints() == 20 ;
-        if(!isComputerRoundEnded && !isComputerGotMorePoints && isComputerGot20Points){
-            croupier.setCards(croupier.giveCard());
+        while (!isComputerRoundEnded) {
+            boolean isComputerGotMorePoints = croupier.getPoints() > playerPoints;
+            boolean isComputerGot20Points = croupier.getPoints() >= 21;
+            if (!isComputerGotMorePoints && !isComputerGot20Points) {
+                croupier.setCards(croupier.giveCard());
+            }else {
+                isComputerRoundEnded = true;
+            }
         }
     }
 
