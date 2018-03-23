@@ -34,6 +34,7 @@ public class Croupier {
     }
 
     public Card giveCard(){
+
         List<Card> deskOfCards = desk.getDesk();
         Card card = deskOfCards.remove(0);
         dealtCards.add(card);

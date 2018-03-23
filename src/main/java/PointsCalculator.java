@@ -13,12 +13,12 @@ public class PointsCalculator {
         return "Game is stil going on";
     }
 
-    private static void pointsCalculator(Player player){
+    public static void pointsCalculator(Player player){
         List<Card> playerCards = player.getCards();
         boolean isCrupierPointsShowed = player instanceof Bank && (playerCards.get(0).getValue() > 9 || Game.isPlayerRoundEnded);
         boolean isHumanPlayer = player instanceof Contestant;
         int points;
-        if(isCrupierPointsShowed || isHumanPlayer) {
+        if(isHumanPlayer || Game.isPlayerRoundEnded) {
             points = sumCardsPoints(playerCards);
         }else{
             points = playerCards.get(0).getValue();
@@ -28,7 +28,7 @@ public class PointsCalculator {
 
     private static String winnerDetermination(Contestant humanPlayer, Bank computerPlayer){
         boolean isDraw = (isBlackJack(humanPlayer) && isBlackJack(computerPlayer)) || draw(humanPlayer, computerPlayer);
-        boolean isHumanPlayerWin = (isBlackJack(humanPlayer) && !isBlackJack(computerPlayer)) || humanWin(humanPlayer, computerPlayer);
+        boolean isHumanPlayerWin = (isBlackJack(humanPlayer) && !isBlackJack(computerPlayer)) || (humanWin(humanPlayer, computerPlayer) && !isMoreThan21(humanPlayer) )|| isMoreThan21(computerPlayer);
         if (isDraw) {
             return "Draw";
         } else if (isHumanPlayerWin) {
@@ -54,11 +54,7 @@ public class PointsCalculator {
     private static boolean isBlackJack(Player player){
         return player.getPoints() == 21;
     }
-    private static boolean draw(Contestant humanPlayer, Bank computerPlayer) {
-        return humanPlayer.getPoints() == computerPlayer.getPoints();
-    }
-    private static boolean humanWin(Contestant humanPlayer, Bank computerPlayer){
-        return humanPlayer.getPoints()> computerPlayer.getPoints();
-    }
+    private static boolean draw(Contestant humanPlayer, Bank computerPlayer) { return humanPlayer.getPoints() == computerPlayer.getPoints(); }
+    private static boolean humanWin(Contestant humanPlayer, Bank computerPlayer){ return humanPlayer.getPoints()> computerPlayer.getPoints(); }
 
 }

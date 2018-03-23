@@ -5,6 +5,7 @@ public class Bank extends Croupier implements Player {
 
     private List<Card> cards;
     private int points;
+    private Card hiidenCard;
 
     Bank(){
         cards = new ArrayList<Card>();
@@ -25,5 +26,18 @@ public class Bank extends Croupier implements Player {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public void setHiidenCard(Card hiidenCard) {
+        this.hiidenCard = hiidenCard;
+    }
+
+    public Card getHiidenCard() {
+        if(hiidenCard == null){
+            throw new IllegalArgumentException("Croupier don't get hidden card");
+        }
+        Card card = hiidenCard;
+        hiidenCard = null;
+        return card;
     }
 }

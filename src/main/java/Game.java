@@ -27,26 +27,32 @@ public class Game extends  PointsCalculator {
             pointDisplaing(croupier, humanPlayer);
             isEndGame = endGameResult(result, humanPlayer);
             isFirstGamePhaseEnded = true;
-            System.out.println("result = "+ result);
         }
         while (!isPlayerRoundEnded ){
-            System.out.println("Do you want a card ? ");
-            System.out.println("Say Yes or No");
+            System.out.println("What do you want to do ? ");
+            System.out.println("Hit / Stand / Double /Split ");
             String doYouWantCard = scanner.next();
             doYouWantCard = doYouWantCard.toLowerCase();
-            if(doYouWantCard.toLowerCase().equals("no") || isEndGame ) {
+            if(doYouWantCard.toLowerCase().equals("stand") || isEndGame ) {
                 isPlayerRoundEnded = true;
-            }else if(doYouWantCard.toLowerCase().equals("yes")){
+            }else if(doYouWantCard.toLowerCase().equals("hit")) {
                 cardForUser(croupier, humanPlayer);
                 result = PointsCalculator.gameResult(humanPlayer, croupier);
                 cardsDisplaing(croupier, humanPlayer);
                 pointDisplaing(croupier, humanPlayer);
                 isEndGame = endGameResult(result, humanPlayer);
+            }else if(doYouWantCard.toLowerCase().equals("double")) {
+
+            }else if(doYouWantCard.toLowerCase().equals("split")){
+
+
             }else{
                 System.out.println("Wrong answer");
             }
         }
         while (!isComputerRoundEnded) {
+            croupier.setCards(croupier.getHiidenCard());
+            PointsCalculator.pointsCalculator(croupier);
             cardsForCroupier(croupier, humanPlayer.getPoints());
             result = PointsCalculator.gameResult(humanPlayer, croupier);
             cardsDisplaing(croupier, humanPlayer);
@@ -82,8 +88,8 @@ public class Game extends  PointsCalculator {
         dispay(playerCards);
         System.out.print("Croupier Cards: ");
         List<Card> croupierCards = new ArrayList<Card>(croupier.getCards()) ;
-        if(croupierCards.get(0).getValue()<10) {
-            croupierCards.remove(1);
+        if(!isFirstGamePhaseEnded) {
+            croupier.setHiidenCard(croupierCards.remove(1));
         }
         dispay(croupierCards);
     }
@@ -142,6 +148,7 @@ public class Game extends  PointsCalculator {
             }else {
                 isComputerRoundEnded = true;
             }
+            PointsCalculator.pointsCalculator(croupier);
         }
     }
 
